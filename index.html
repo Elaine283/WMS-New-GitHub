@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WMS 日系零售選物管理系統 | 庫存最佳化</title>
+    <meta name="description" content="智慧倉儲管理系統 - 庫存最佳化解決方案">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --peach: #F4845F;
+            --apricot: #F9C5A7;
+            --caramel: #E8956D;
+            --pink: #F5C2C7;
+            --sand: #E8D5C4;
+            --cream: #FFF0E8;
+            --text: #3D2B1F;
+            --muted: #8B6B5A;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, #FFFBF8 100%);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 248, 245, 0.95);
+            backdrop-filter: blur(8px);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--apricot);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--peach), var(--caramel));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav a {
+            color: var(--peach);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--caramel);
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+            line-height: 1.2;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--peach);
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--muted);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+
+        /* CTA Buttons */
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--peach);
+            color: white;
+            box-shadow: 0 4px 15px rgba(244, 132, 95, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--caramel);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 132, 95, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--peach);
+            border: 2px solid var(--peach);
+        }
+
+        .btn-secondary:hover {
+            background: var(--cream);
+            border-color: var(--caramel);
+            color: var(--caramel);
+        }
+
+        /* Features Section */
+        .features {
+            background: white;
+            padding: 4rem 2rem;
+            margin: 3rem 0;
+        }
+
+        .features .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            background: var(--cream);
+            border-radius: 12px;
+            border: 2px solid var(--apricot);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(244, 132, 95, 0.15);
+        }
+
+        .feature-card h3 {
+            color: var(--peach);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .feature-card ul {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .feature-card li {
+            color: var(--muted);
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .feature-card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--peach);
+            font-weight: bold;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(135deg, var(--peach), var(--caramel));
+            color: white;
+            padding: 4rem 2rem;
+            margin: 3rem 0;
+        }
+
+        .stats .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h4 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Project Info */
+        .project-info {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: var(--cream);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--peach);
+        }
+
+        .info-card h4 {
+            color: var(--peach);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-card p {
+            color: var(--muted);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            nav a {
+                margin-left: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero, .features, .stats, .project-info {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">🏪 WMS Selection Retail Lab</div>
+            <div>
+                <a href="#features">功能</a>
+                <a href="#project">專題</a>
+                <a href="#live">實時演示</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>智慧倉儲管理系統</h1>
+        <div class="subtitle">庫存最佳化</div>
+        <p>整合日系零售選物的柔和質感、蜜桃櫻花焦糖色系、庫存科學公式與 WMS 專題骨架，打造完整的倉儲管理解決方案。</p>
+        
+        <div class="cta-buttons">
+            <a href="https://wms-retail-ft9ktzch.manus.space" class="btn btn-primary" target="_blank">
+                🚀 進入實時演示
+            </a>
+            <a href="https://github.com/Elaine283/WMS-New-GitHub" class="btn btn-secondary" target="_blank">
+                💻 查看代碼
+            </a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">核心功能</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>📊 系統架構設計</h3>
+                    <ul>
+                        <li>14 個完整頁面與導航體系</li>
+                        <li>6 個 Chart.js 動畫圖表</li>
+                        <li>響應式設計（RWD）</li>
+                        <li>日系零售選物視覺風格</li>
+                        <li>全球搜尋功能</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h3>🧮 決策支援工具</h3>
+                    <ul>
+                        <li>EOQ / EPQ 互動式計算器</li>
+                        <li>安全庫存科學模型</li>
+                        <li>庫存最佳化分析</li>
+                        <li>業界案例與成效分析</li>
+                        <li>18 個月產品迭代藍圖</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h3>🔧 技術棧</h3>
+                    <ul>
+                        <li>React 19 + Tailwind 4</li>
+                        <li>tRPC + Express 後端</li>
+                        <li>MySQL 數據庫集成</li>
+                        <li>Google Maps API</li>
+                        <li>Chart.js 數據可視化</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h4>14</h4>
+                    <p>完整頁面</p>
+                </div>
+                <div class="stat-item">
+                    <h4>6</h4>
+                    <p>動畫圖表</p>
+                </div>
+                <div class="stat-item">
+                    <h4>2</h4>
+                    <p>計算工具</p>
+                </div>
+                <div class="stat-item">
+                    <h4>100%</h4>
+                    <p>響應式設計</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Info -->
+    <section class="project-info" id="project">
+        <h2 class="section-title">專題信息</h2>
+        <div class="info-grid">
+            <div class="info-card">
+                <h4>📚 課程</h4>
+                <p>流通科技管理</p>
+            </div>
+            <div class="info-card">
+                <h4>👨‍🏫 指導教授</h4>
+                <p>褚文明 教授</p>
+            </div>
+            <div class="info-card">
+                <h4>👥 專題成員</h4>
+                <p>陳玉鳳、洪依辰</p>
+            </div>
+            <div class="info-card">
+                <h4>📅 成立時間</h4>
+                <p>2026 年 5 月</p>
+            </div>
+            <div class="info-card">
+                <h4>📍 地址</h4>
+                <p>臺中市太平區中山路二段 57 號</p>
+            </div>
+            <div class="info-card">
+                <h4>📧 聯繫方式</h4>
+                <p>info@wms-retail.com</p>
+            </div>
+        </div>
+
+        <h2 class="section-title" style="margin-top: 3rem;" id="live">實時演示</h2>
+        <div style="text-align: center; margin: 2rem 0;">
+            <p style="color: var(--muted); margin-bottom: 1rem;">完整的互動式應用已部署在 Manus 平台上</p>
+            <a href="https://wms-retail-ft9ktzch.manus.space" class="btn btn-primary" target="_blank">
+                🌐 訪問實時應用 →
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 WMS 日系零售選物管理系統 | 庫存最佳化</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+            <a href="https://github.com/Elaine283/WMS-New-GitHub" style="color: var(--apricot); text-decoration: none;">GitHub Repository</a> | 
+            <a href="https://wms-retail-ft9ktzch.manus.space" style="color: var(--apricot); text-decoration: none;">Live Demo</a>
+        </p>
+    </footer>
+</body>
+</html>
