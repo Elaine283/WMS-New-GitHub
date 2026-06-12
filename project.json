@@ -1,0 +1,89 @@
+{
+  "name": "WMS 日系零售選物管理系統",
+  "version": "1.0.0",
+  "description": "智慧倉儲管理系統 - 庫存最佳化解決方案",
+  "author": "Elaine283",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Elaine283/WMS-New-GitHub.git"
+  },
+  "homepage": "https://elaine283.github.io/WMS-New-GitHub/",
+  "keywords": [
+    "WMS",
+    "倉儲管理",
+    "庫存最佳化",
+    "零售",
+    "日系",
+    "選物",
+    "EOQ",
+    "EPQ",
+    "安全庫存"
+  ],
+  "project": {
+    "title": "WMS 日系零售選物管理系統",
+    "subtitle": "庫存最佳化",
+    "course": "流通科技管理",
+    "professor": "褚文明 教授",
+    "members": [
+      "陳玉鳳",
+      "洪依辰"
+    ],
+    "establishedDate": "2026-05",
+    "address": "臺中市太平區中山路二段 57 號 411030 臺灣",
+    "contact": "info@wms-retail.com"
+  },
+  "features": {
+    "pages": 14,
+    "charts": 6,
+    "tools": 2,
+    "responsive": true,
+    "globalSearch": true
+  },
+  "technologies": {
+    "frontend": [
+      "HTML",
+      "CSS",
+      "JavaScript"
+    ],
+    "framework": [
+      "React 19",
+      "Tailwind CSS 4"
+    ],
+    "backend": [
+      "tRPC",
+      "Express.js"
+    ],
+    "database": [
+      "MySQL"
+    ],
+    "libraries": [
+      "Chart.js",
+      "Google Maps API",
+      "Recharts"
+    ]
+  },
+  "deliverables": {
+    "pages": "14 個完整頁面與導航體系",
+    "charts": "6 個 Chart.js 動畫圖表",
+    "design": "響應式設計（RWD）",
+    "style": "日系零售選物視覺風格",
+    "search": "全球搜尋功能",
+    "tools": "EOQ / EPQ 互動式計算器",
+    "model": "安全庫存科學模型",
+    "optimization": "庫存最佳化分析",
+    "cases": "業界案例與成效分析",
+    "roadmap": "18 個月產品迭代藍圖"
+  },
+  "statistics": {
+    "inventory_accuracy": "99.2%",
+    "picking_efficiency": "38%",
+    "stockout_rate": "0.8%",
+    "inventory_turnover": "62%"
+  },
+  "links": {
+    "github": "https://github.com/Elaine283/WMS-New-GitHub",
+    "live_demo": "https://wms-retail-ft9ktzch.manus.space",
+    "github_pages": "https://elaine283.github.io/WMS-New-GitHub/"
+  }
+}
