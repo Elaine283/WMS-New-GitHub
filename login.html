@@ -495,6 +495,14 @@
                     <p>登入您的帳戶以繼續</p>
                 </div>
 
+                <!-- Demo account info -->
+                <div style="background: rgba(244, 132, 95, 0.08); border: 1px solid rgba(244, 132, 95, 0.2); border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem; font-size: 0.85rem;">
+                    <p style="color: var(--text); font-weight: 500; margin-bottom: 0.5rem;">📝 演示帳號</p>
+                    <p style="color: var(--muted); margin: 0.25rem 0;"><strong>帳號：</strong> a0976454270@gmail.com</p>
+                    <p style="color: var(--muted); margin: 0.25rem 0;"><strong>密碼：</strong> 123456</p>
+                    <button type="button" id="useDemoBtn" style="margin-top: 0.75rem; width: 100%; padding: 0.5rem; background: var(--peach); color: white; border: none; border-radius: 8px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='var(--caramel)'" onmouseout="this.style.background='var(--peach)'">使用演示帳號登入</button>
+                </div>
+
                 <!-- Login form -->
                 <form id="loginForm">
                     <!-- Email field -->
@@ -672,16 +680,19 @@
             submitBtn.disabled = true;
             submitBtn.classList.add('loading');
 
-            setTimeout(() => {
+                setTimeout(() => {
                 const loginData = {
                     email: emailInput.value,
-                    password: passwordInput.value,
+                    password: emailInput.value === DEMO_ACCOUNT.email && passwordInput.value === DEMO_ACCOUNT.password,
                     rememberMe: rememberMeCheckbox.checked,
                     timestamp: new Date().toISOString(),
                 };
 
-                console.log('Login attempt:', loginData);
-                alert(`登入成功！\n郵件: ${loginData.email}\n記住我: ${loginData.rememberMe ? '是' : '否'}`);
+                const isDemo = emailInput.value === DEMO_ACCOUNT.email && passwordInput.value === DEMO_ACCOUNT.password;
+                const role = isDemo ? DEMO_ACCOUNT.role : 'user';
+
+                console.log('Login attempt:', { ...loginData, email: emailInput.value, role });
+                alert(`登入成功！\n郵件: ${emailInput.value}\n角色: ${role === 'admin' ? '管理員' : '普通用戶'}\n記住我: ${loginData.rememberMe ? '是' : '否'}`);
 
                 // Reset form
                 form.reset();
@@ -717,6 +728,25 @@
                 localStorage.removeItem('email');
             }
         });
+
+        // Demo account credentials
+        const DEMO_ACCOUNT = {
+            email: 'a0976454270@gmail.com',
+            password: '123456',
+            role: 'admin'
+        };
+
+        // Handle demo account button
+        const useDemoBtn = document.getElementById('useDemoBtn');
+        if (useDemoBtn) {
+            useDemoBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                emailInput.value = DEMO_ACCOUNT.email;
+                passwordInput.value = DEMO_ACCOUNT.password;
+                rememberMeCheckbox.checked = true;
+                emailInput.focus();
+            });
+        }
 
         // Load remembered email on page load
         window.addEventListener('load', () => {

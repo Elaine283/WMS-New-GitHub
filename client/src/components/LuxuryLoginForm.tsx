@@ -21,10 +21,24 @@ export const LuxuryLoginForm: React.FC<LoginFormProps> = ({
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
   const [socialLoading, setSocialLoading] = useState<string | null>(null);
 
+  // Demo account credentials
+  const DEMO_ACCOUNT = {
+    email: 'a0976454270@gmail.com',
+    password: '123456',
+    role: 'admin',
+  };
+
   // Validate email format
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  };
+
+  // Handle demo account
+  const handleUseDemoAccount = () => {
+    setEmail(DEMO_ACCOUNT.email);
+    setPassword(DEMO_ACCOUNT.password);
+    setRememberMe(true);
   };
 
   // Handle form submission
@@ -94,6 +108,24 @@ export const LuxuryLoginForm: React.FC<LoginFormProps> = ({
               <p className="text-sm text-[#8B6B5A]">
                 登入您的帳戶以繼續
               </p>
+            </div>
+
+            {/* Demo account info */}
+            <div className="mb-6 p-4 bg-[#F4845F]/8 border border-[#F4845F]/20 rounded-xl">
+              <p className="text-sm font-medium text-[#3D2B1F] mb-2">📝 演示帳號</p>
+              <p className="text-xs text-[#8B6B5A] mb-1">
+                <strong>帳號：</strong> {DEMO_ACCOUNT.email}
+              </p>
+              <p className="text-xs text-[#8B6B5A] mb-3">
+                <strong>密碼：</strong> {DEMO_ACCOUNT.password}
+              </p>
+              <button
+                type="button"
+                onClick={handleUseDemoAccount}
+                className="w-full py-2 rounded-lg bg-[#F4845F] text-white text-xs font-medium transition-colors hover:bg-[#E8956D]"
+              >
+                使用演示帳號登入
+              </button>
             </div>
 
             {/* Form */}
