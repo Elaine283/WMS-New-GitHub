@@ -681,25 +681,42 @@
             submitBtn.classList.add('loading');
 
                 setTimeout(() => {
+                const isDemo = emailInput.value === DEMO_ACCOUNT.email && passwordInput.value === DEMO_ACCOUNT.password;
+                const role = isDemo ? DEMO_ACCOUNT.role : 'user';
+
                 const loginData = {
                     email: emailInput.value,
                     password: emailInput.value === DEMO_ACCOUNT.email && passwordInput.value === DEMO_ACCOUNT.password,
                     rememberMe: rememberMeCheckbox.checked,
                     timestamp: new Date().toISOString(),
+                    role: role,
                 };
 
-                const isDemo = emailInput.value === DEMO_ACCOUNT.email && passwordInput.value === DEMO_ACCOUNT.password;
-                const role = isDemo ? DEMO_ACCOUNT.role : 'user';
+                console.log('Login attempt:', { ...loginData, email: emailInput.value });
 
-                console.log('Login attempt:', { ...loginData, email: emailInput.value, role });
-                alert(`登入成功！\n郵件: ${emailInput.value}\n角色: ${role === 'admin' ? '管理員' : '普通用戶'}\n記住我: ${loginData.rememberMe ? '是' : '否'}`);
+                // Store login info in localStorage
+                localStorage.setItem('loginData', JSON.stringify({
+                    email: emailInput.value,
+                    role: role,
+                    loginTime: new Date().toISOString(),
+                }));
 
-                // Reset form
-                form.reset();
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('loading');
-                togglePasswordBtn.textContent = '👁️';
-                passwordInput.type = 'password';
+                // If admin account, redirect to live demo
+                if (isDemo) {
+                    alert(`✅ 登入成功！\n郵件: ${emailInput.value}\n角色: 管理員\n\n正在進入實時演示...`);
+                    // Redirect to live demo after 1 second
+                    setTimeout(() => {
+                        window.location.href = 'https://wms-retail-ft9ktzch.manus.space';
+                    }, 1000);
+                } else {
+                    alert(`登入成功！\n郵件: ${emailInput.value}\n角色: 普通用戶\n記住我: ${loginData.rememberMe ? '是' : '否'}`);
+                    // Reset form
+                    form.reset();
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('loading');
+                    togglePasswordBtn.textContent = '👁️';
+                    passwordInput.type = 'password';
+                }
             }, 1500);
         });
 
@@ -762,6 +779,8 @@
         // Console message
         console.log('%c WMS 日系零售選物管理系統 - 登入頁面', 'font-size: 16px; font-weight: bold; color: #F4845F;');
         console.log('%c 高質感 Luxury/Refined 設計', 'font-size: 12px; color: #E8956D;');
+        console.log('%c 演示帳號: a0976454270@gmail.com / 密碼: 123456', 'font-size: 11px; color: #F9C5A7;');
+        console.log('%c 登入後將自動進入實時演示應用', 'font-size: 11px; color: #F9C5A7;');
     </script>
 </body>
 </html>

@@ -61,7 +61,21 @@ export const LuxuryLoginForm: React.FC<LoginFormProps> = ({
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      onSubmit?.(email, password, rememberMe);
+      const isAdmin = email === DEMO_ACCOUNT.email && password === DEMO_ACCOUNT.password;
+      
+      if (isAdmin) {
+        localStorage.setItem('loginData', JSON.stringify({
+          email,
+          role: 'admin',
+          loginTime: new Date().toISOString(),
+        }));
+        
+        setTimeout(() => {
+          window.location.href = 'https://wms-retail-ft9ktzch.manus.space';
+        }, 1500);
+      } else {
+        onSubmit?.(email, password, rememberMe);
+      }
     }
   };
 
